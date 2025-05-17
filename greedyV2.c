@@ -61,6 +61,8 @@ bool* greedyVertexCover(Graph* graph) {
 
     int remainingEdges = numEdges;
 
+    srand(time(NULL));
+
     while (remainingEdges > 0) {
         // Find the first uncovered edge
         int edgeIndex = -1;
@@ -86,7 +88,14 @@ bool* greedyVertexCover(Graph* graph) {
         }
 
         // Add the vertex that covers more uncovered edges
-        int selected = (degreeU >= degreeV) ? u : v;
+        int selected;
+        if (degreeU == degreeV){
+            //degrees are euqal, select one of the two vertices
+            selected=(rand()%2)? u : v;
+        }else{
+            //otherwise select the vertez with higher degree
+            selected=(degreeU >degreeV)? u:v;
+        }
         vertexCover[selected] = true;
 
         // Mark all edges covered by 'selected' as covered
